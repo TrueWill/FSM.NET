@@ -1,6 +1,9 @@
-# Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
+# Build Folders
 bin
 obj
 
-# mstest test results
-TestResults
+# Visual Studio, ReSharper, dotCover, etc.
+*.user
+*.suo
+*.dotCover
+_ReSharper*/
