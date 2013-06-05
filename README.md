@@ -66,11 +66,12 @@ listen to ideas, though!)
 + Add more tests (in F#, C#, or both - I'm not sure)
 + Fix bugs :)
 + Write the parser
++ Add support for comments in DSL
 + Improve the OO wrapper to make it easy to use from C#
 + Much better documentation
 + NuGet package
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 
-Thanks,
+Thanks,  
 Bill
