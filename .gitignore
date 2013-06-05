@@ -1,6 +1,9 @@
 # Build Folders
-bin
-obj
+bin/
+obj/
+
+# NuGet
+packages/
 
 # Visual Studio, ReSharper, dotCover, etc.
 *.user

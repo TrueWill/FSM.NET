@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TrueWill.Fsm", "TrueWill.Fsm\TrueWill.Fsm.fsproj", "{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TrueWill.Fsm.Tests", "TrueWill.Fsm.Tests\TrueWill.Fsm.Tests.fsproj", "{D984307D-865C-4EEB-B98C-EBD719AEFDD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D984307D-865C-4EEB-B98C-EBD719AEFDD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D984307D-865C-4EEB-B98C-EBD719AEFDD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D984307D-865C-4EEB-B98C-EBD719AEFDD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D984307D-865C-4EEB-B98C-EBD719AEFDD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
