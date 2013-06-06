@@ -19,6 +19,14 @@ This project also is helping me to learn F#. :)
 
 [Keith Dahlby](https://twitter.com/dahlbyk) provided help and encouragement.
 
+## Build
+
+Visual Studio 2012, targeting .NET 4.0 under Windows. It doesn't need 4.5
+features, and I don't want to restrict its use to Windows 7+.
+
+The assembly should be CLS-compliant, and it should be natural to call from
+C# (to give it the widest possible audience).
+
 ## State Transition Tables
 
 ### Format
@@ -70,6 +78,7 @@ listen to ideas, though!)
 + Improve the OO wrapper to make it easy to use from C#
 + Much better documentation
 + NuGet package
++ Psake build script?
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 
