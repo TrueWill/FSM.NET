@@ -61,10 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TransitionTests.fs" />
-    <None Include="Script.fsx" />
     <None Include="packages.config" />
     <None Include="app.config" />
+    <Compile Include="TransitionTests.fs" />
+    <Compile Include="FunctionalFsmTests.fs" />
+    <None Include="Script.fsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrueWill.Fsm\TrueWill.Fsm.fsproj">
