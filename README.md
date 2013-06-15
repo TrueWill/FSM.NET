@@ -25,7 +25,11 @@ Visual Studio 2012, targeting .NET 4.0 under Windows. It doesn't need 4.5
 features, and I don't want to restrict its use to Windows 7+.
 
 The assembly should be CLS-compliant, and it should be natural to call from
-C# (to give it the widest possible audience).
+C# (to give it the widest possible audience). There are unit tests in both
+F# and C# to insure this.
+
+I would prefer to avoid adding dependencies on other libraries to the core
+library. (The tests depend on xUnit.net, FsUnit, etc.)
 
 ## State Transition Tables
 
@@ -71,9 +75,8 @@ listen to ideas, though!)
 
 ## To Do
 
-+ Add more tests (in F#, C#, or both - I'm not sure)
-+ Fix bugs :)
-+ Write the parser
++ Add more tests
++ Improve the parser's robustness
 + Add support for comments in DSL
 + Improve the OO wrapper to make it easy to use from C#
 + Much better documentation
