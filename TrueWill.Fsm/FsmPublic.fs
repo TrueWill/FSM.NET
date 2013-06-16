@@ -8,6 +8,11 @@ do
     ()
 
 type StateMachine(transitions) =
+    let transitions = transitions |> Seq.toList
+
+    do
+        if transitions |> Seq.isEmpty then
+            raise <| new ArgumentException("Transition Table is empty.", "transitions")
 
     /// Gets the initial state.
     member x.InitialState = getInitialState transitions
@@ -21,5 +26,6 @@ type StateMachine(transitions) =
         getNewState currentState triggeringEvent transitions
 
     /// Gets the collection of available events for the given state.
+    /// Throws InvalidOperationException if currentState is not a valid state.
     member x.GetAvailableEvents(currentState) =
         getAvailableEvents currentState transitions
