@@ -17,3 +17,18 @@ let parse_WhenBasic_ReturnsCollection () =
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
           { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Unlocked" };
           { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
+
+[<Fact>]
+let parse_WhenBlankLines_Ignores () =
+    let tableText =
+        "\r\n\
+         Locked|coin|Unlocked\r\n\
+         \t  \r\n\
+         Unlocked|pass|Locked\r\n\
+         \r\n"
+
+    let table = TransitionTableParser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
