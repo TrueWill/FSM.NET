@@ -82,6 +82,7 @@ listen to ideas, though!)
 + Much better documentation
 + NuGet package
 + Psake build script?
++ Example of one intended use - web service + desktop app
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 
