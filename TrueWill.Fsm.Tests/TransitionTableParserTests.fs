@@ -50,6 +50,17 @@ let parse_WhenEventsDifferOnlyByCase_Throws () =
     (fun () -> TransitionTableParser.parse(tableText) |> ignore) |> should throw typeof<ArgumentException>
 
 [<Fact>]
+let parse_WhenExtraTransitionPart_Throws () =
+    let tableText =
+        "Locked|coin|Unlocked\r\n\
+         Unlocked|coin|Unlocked\r\n\
+         Unlocked|pass|Locked|fish"
+
+    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+
+    ex.Message |> should equal "Invalid number of elements on line 3.\r\nParameter name: tableText"
+
+[<Fact>]
 let differOnlyByCase_WhenEmpty_ReturnsFalse () =
     let result = TransitionTableParser.differOnlyByCase []
     result |> should be False
