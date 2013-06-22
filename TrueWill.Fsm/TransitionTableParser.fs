@@ -1,9 +1,18 @@
 ﻿module TrueWill.Fsm.TransitionTableParser
 
+open System
 open System.Text.RegularExpressions
 
+let private regexComment = new Regex("#.*")
+let private regexBlankLine = new Regex(@"^\s*$")
+let private regexLineBreak = new Regex(@"\r?\n")
+let private regexTransition = new Regex(@"^(?<currentState>\w+)\|(?<triggeringEvent>\w+)\|(?<newState>\w+)\s*$")
+
+let private removeComment line =
+    regexComment.Replace(line, String.Empty)
+
 let private isBlank line =
-    Regex.IsMatch(line, @"^\s*$")
+    regexBlankLine.IsMatch(line)
 
 /// Determines if a sequence (which may contain duplicates) contains
 /// any elements that differ only by case.
@@ -17,24 +26,24 @@ let differOnlyByCase (items : seq<string>) =
 // TODO Error checking
 // TODO Allow whitespace (so can line up delimiters if desired)
 // TODO Disallow blank elements
-// TODO Allow comments - what about end-of-line ones?
 // TODO Cleanup
 let parse tableText =
-    let lines = Regex.Split(tableText, @"\r?\n")
+    let lines = regexLineBreak.Split(tableText)
 
     let result =
         lines
+        |> Seq.map removeComment
         |> Seq.mapi (fun linenumber line -> (linenumber, line))
         |> Seq.filter (not << isBlank << snd)
         |> Seq.map
             (fun (lineNumber, line) ->
-            let mtch = Regex.Match(line, "^(?<currentState>\w+)\|(?<triggeringEvent>\w+)\|(?<newState>\w+)$")
+            let mtch = regexTransition.Match(line)
             if not mtch.Success then
-                raise <| System.ArgumentException(sprintf "Invalid number of elements on line %d." (lineNumber + 1), "tableText")
+                raise <| ArgumentException(sprintf "Invalid number of elements on line %d." (lineNumber + 1), "tableText")
             { CurrentState = mtch.Groups.["currentState"].Value; TriggeringEvent = mtch.Groups.["triggeringEvent"].Value; NewState = mtch.Groups.["newState"].Value } )
         |> Seq.toList
 
     if result |> Seq.map (fun x -> x.TriggeringEvent) |> differOnlyByCase then
-        raise <| System.ArgumentException("Some events differ only by case.", "tableText")
+        raise <| ArgumentException("Some events differ only by case.", "tableText")
 
     result

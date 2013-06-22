@@ -15,6 +15,8 @@ I wanted to write a functional library that would do the same - read
 a textual DSL (domain-specific language) that defined a state transition table,
 and create a Semantic Model ([Fowler](http://martinfowler.com/books/dsl.html)).
 
+I borrowed parsing techniques from Fowler's book (see above link).
+
 This project also is helping me to learn F#. :) 
 
 [Keith Dahlby](https://twitter.com/dahlbyk) provided help and encouragement.
@@ -39,6 +41,8 @@ library. (The tests depend on xUnit.net, FsUnit, etc.)
 
 One per line.  
 The first state of the first line is the initial state.
+
+Anything following a '#' is ignored (a comment).
 
 ### Example
 
@@ -77,7 +81,6 @@ listen to ideas, though!)
 
 + Add more tests
 + Improve the parser's robustness
-+ Add support for comments in DSL
 + Improve the OO wrapper to make it easy to use from C#
 + Much better documentation
 + NuGet package

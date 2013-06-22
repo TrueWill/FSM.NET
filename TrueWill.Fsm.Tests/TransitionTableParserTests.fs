@@ -35,6 +35,32 @@ let parse_WhenBlankLines_Ignores () =
           { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
 
 [<Fact>]
+let parse_WhenCommentAtEndOfLine_Ignores () =
+    let tableText =
+        "Locked|coin|Unlocked # This is an end-of-line comment\r\n\
+         Unlocked|pass|Locked"
+
+    let table = TransitionTableParser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
+
+[<Fact>]
+let parse_WhenCommentLines_Ignores () =
+    let tableText =
+        "# This is a comment\r\n\
+         Locked|coin|Unlocked\r\n\
+         # Another comment\r\n\
+         Unlocked|pass|Locked"
+
+    let table = TransitionTableParser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
+
+[<Fact>]
 let parse_WhenEmpty_ReturnsEmptyCollection () =
     // Validating this case is not the parser's responsibility.
     let table = TransitionTableParser.parse(String.Empty)
