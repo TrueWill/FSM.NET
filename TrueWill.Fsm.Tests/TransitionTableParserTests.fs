@@ -60,6 +60,20 @@ let parse_WhenExtraTransitionPart_Throws () =
 
     ex.Message |> should equal "Invalid number of elements on line 3.\r\nParameter name: tableText"
 
+// TODO: test for insufficent parts
+
+[<Fact>]
+let parse_WhenErrorAndBlankLine_ThrowsWithCorrectLineNumber () =
+    let tableText =
+        "Locked|coin|Unlocked\r\n\
+         \r\n\
+         Unlocked|coin|Unlocked\r\n\
+         Unlocked|pass|Locked|fish"
+
+    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+
+    ex.Message |> should equal "Invalid number of elements on line 4.\r\nParameter name: tableText"
+
 [<Fact>]
 let differOnlyByCase_WhenEmpty_ReturnsFalse () =
     let result = TransitionTableParser.differOnlyByCase []

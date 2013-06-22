@@ -18,16 +18,16 @@ let differOnlyByCase (items : seq<string>) =
 // TODO Allow whitespace (so can line up delimiters if desired)
 // TODO Disallow blank elements
 // TODO Allow comments - what about end-of-line ones?
-// TODO Line numbers will be off when blank lines/comments
 // TODO Cleanup
 let parse tableText =
     let lines = Regex.Split(tableText, @"\r?\n")
 
     let result =
         lines
-        |> Seq.filter (not << isBlank)
-        |> Seq.mapi
-            (fun lineNumber line ->
+        |> Seq.mapi (fun linenumber line -> (linenumber, line))
+        |> Seq.filter (not << isBlank << snd)
+        |> Seq.map
+            (fun (lineNumber, line) ->
             let mtch = Regex.Match(line, "^(?<currentState>\w+)\|(?<triggeringEvent>\w+)\|(?<newState>\w+)$")
             if not mtch.Success then
                 raise <| System.ArgumentException(sprintf "Invalid number of elements on line %d." (lineNumber + 1), "tableText")
