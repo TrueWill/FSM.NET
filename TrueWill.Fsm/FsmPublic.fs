@@ -9,10 +9,14 @@ do
 
 type StateMachine(transitions) =
     let transitions = transitions |> Seq.toList
+    let isNull x = obj.ReferenceEquals(x, Unchecked.defaultof<_>)  // http://stackoverflow.com/a/10746757/161457
 
     do
         if transitions |> Seq.isEmpty then
             raise <| new ArgumentException("Transition Table is empty.", "transitions")
+
+        if transitions |> Seq.exists isNull then
+            raise <| new ArgumentException("A transition is null.", "transitions")
 
     /// Gets the initial state.
     member x.InitialState = getInitialState transitions

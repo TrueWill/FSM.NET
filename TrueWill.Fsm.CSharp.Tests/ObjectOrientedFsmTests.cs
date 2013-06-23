@@ -8,7 +8,7 @@ namespace TrueWill.Fsm.CSharp.Tests
 {
     public class ObjectOrientedFsmTests
     {
-        // TODO: Null checks :(
+        // TODO: Null checks :( (working)
         // TODO: Way to verify CLS-compliance?
 
         [Fact]
@@ -29,12 +29,33 @@ namespace TrueWill.Fsm.CSharp.Tests
         }
 
         [Fact]
+        public void Constructor_WhenTransitionTableContainsNull_Throws()
+        {
+            var transitionTable =
+                new List<Transition>
+                    {
+                        new Transition("Locked", "coin", "Unlocked"),
+                        null
+                    };
+
+            Assert.Throws<ArgumentException>(
+                () => new StateMachine(transitionTable));
+        }
+
+        [Fact]
         public void Constructor_WhenTransitionTableIsEmpty_Throws()
         {
             var transitionTable = Enumerable.Empty<Transition>();
 
             Assert.Throws<ArgumentException>(
                 () => new StateMachine(transitionTable));
+        }
+
+        [Fact]
+        public void Constructor_WhenTransitionTableIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => new StateMachine(null));
         }
 
         [Fact]
@@ -214,6 +235,13 @@ namespace TrueWill.Fsm.CSharp.Tests
                     };
 
             Assert.Equal(expected, result.ToArray());
+        }
+
+        [Fact]
+        public void Parse_WhenTableTextIsNull_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(
+                () => TransitionTableParser.Parse(null));
         }
 
         [Fact]
