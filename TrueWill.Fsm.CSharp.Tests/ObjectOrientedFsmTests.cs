@@ -10,7 +10,6 @@ namespace TrueWill.Fsm.CSharp.Tests
     {
         // TODO: Null checks :(
         // TODO: Way to verify CLS-compliance?
-        // TODO: More tests of terminal state.
 
         [Fact]
         public void Constructor_WhenCalled_CopiesTransitionTable()
@@ -140,6 +139,24 @@ namespace TrueWill.Fsm.CSharp.Tests
             string result = sut.GetNewState(currentState, triggeringEvent);
 
             Assert.Equal(expectedNewState, result);
+        }
+
+        [Fact]
+        public void GetNewState_WhenTerminalCurrentState_Throws()
+        {
+            const string TerminalState = "Terminal";
+            const string TriggeringEvent = "ev";
+
+            var transitionTable =
+                new List<Transition>
+                    {
+                        new Transition("Whatever", TriggeringEvent, TerminalState)
+                    };
+
+            var sut = new StateMachine(transitionTable);
+
+            Assert.Throws<InvalidOperationException>(
+                () => sut.GetNewState(TerminalState, TriggeringEvent));
         }
 
         [Fact]
