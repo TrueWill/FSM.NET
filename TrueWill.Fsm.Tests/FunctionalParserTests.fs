@@ -1,4 +1,4 @@
-﻿module TransitionTableParserTests
+﻿module FunctionalParserTests
 
 open System
 open TrueWill.Fsm
@@ -12,7 +12,7 @@ let parse_WhenBasic_ReturnsCollection () =
          Unlocked|coin|Unlocked\r\n\
          Unlocked|pass|Locked"
 
-    let table = TransitionTableParser.parse(tableText)
+    let table = Parser.parse(tableText)
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
@@ -28,7 +28,7 @@ let parse_WhenBlankLines_Ignores () =
          Unlocked|pass|Locked\r\n\
          \r\n"
 
-    let table = TransitionTableParser.parse(tableText)
+    let table = Parser.parse(tableText)
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
@@ -40,7 +40,7 @@ let parse_WhenCommentAtEndOfLine_Ignores () =
         "Locked|coin|Unlocked # This is an end-of-line comment\r\n\
          Unlocked|pass|Locked"
 
-    let table = TransitionTableParser.parse(tableText)
+    let table = Parser.parse(tableText)
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
@@ -54,7 +54,7 @@ let parse_WhenCommentLines_Ignores () =
          # Another comment\r\n\
          Unlocked|pass|Locked"
 
-    let table = TransitionTableParser.parse(tableText)
+    let table = Parser.parse(tableText)
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
@@ -63,7 +63,7 @@ let parse_WhenCommentLines_Ignores () =
 [<Fact>]
 let parse_WhenEmpty_ReturnsEmptyCollection () =
     // Validating this case is not the parser's responsibility.
-    let table = TransitionTableParser.parse(String.Empty)
+    let table = Parser.parse(String.Empty)
     table |> Seq.isEmpty |> should be True
 
 [<Fact>]
@@ -73,7 +73,7 @@ let parse_WhenEventsDifferOnlyByCase_Throws () =
          Unlocked|Coin|Unlocked\r\n\
          Unlocked|pass|Locked"
 
-    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
 
     ex.Message |> should equal "Some events differ only by case.\r\nParameter name: tableText"
 
@@ -84,7 +84,7 @@ let parse_WhenExtraTransitionPart_Throws () =
          Unlocked|coin|Unlocked\r\n\
          Unlocked|pass|Locked|fish"
 
-    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
 
     ex.Message |> should equal "Invalid number of elements on line 3.\r\nParameter name: tableText"
 
@@ -96,7 +96,7 @@ let parse_WhenErrorAndBlankLine_ThrowsWithCorrectLineNumber () =
          Unlocked|coin|Unlocked\r\n\
          Unlocked|pass|Locked|fish"
 
-    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
 
     ex.Message |> should equal "Invalid number of elements on line 4.\r\nParameter name: tableText"
 
@@ -107,7 +107,7 @@ let parse_WhenLinuxNewLines_ReturnsCollection () =
          Unlocked|coin|Unlocked\n\
          Unlocked|pass|Locked\n"
 
-    let table = TransitionTableParser.parse(tableText)
+    let table = Parser.parse(tableText)
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
@@ -121,7 +121,7 @@ let parse_WhenMissingTransitionPart_Throws () =
          Unlocked|Unlocked\r\n\
          Unlocked|pass|Locked"
 
-    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
 
     ex.Message |> should equal "Invalid number of elements on line 2.\r\nParameter name: tableText"
 
@@ -129,9 +129,7 @@ let parse_WhenMissingTransitionPart_Throws () =
 let parse_WhenOneTransition_ReturnsCollection () =
     let tableText = "Locked|coin|Unlocked"
 
-    let table = TransitionTableParser.parse(tableText)
-
-    let table = TransitionTableParser.parse(tableText)
+    let table = Parser.parse(tableText)
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" } ]
@@ -143,36 +141,36 @@ let parse_WhenStatesDifferOnlyByCase_Throws () =
          Unlocked|coin|Unlocked\r\n\
          Unlocked|pass|locked"
 
-    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
 
     ex.Message |> should equal "Some states differ only by case.\r\nParameter name: tableText"
 
 [<Fact>]
 let differOnlyByCase_WhenEmpty_ReturnsFalse () =
-    let result = TransitionTableParser.differOnlyByCase []
+    let result = Parser.differOnlyByCase []
     result |> should be False
 
 [<Fact>]
 let differOnlyByCase_WhenOne_ReturnsFalse () =
-    let result = TransitionTableParser.differOnlyByCase [ "foo" ]
+    let result = Parser.differOnlyByCase [ "foo" ]
     result |> should be False
 
 [<Fact>]
 let differOnlyByCase_WhenDuplicates_ReturnsFalse () =
-    let result = TransitionTableParser.differOnlyByCase [ "foo"; "foo" ]
+    let result = Parser.differOnlyByCase [ "foo"; "foo" ]
     result |> should be False
 
 [<Fact>]
 let differOnlyByCase_WhenDistinct_ReturnsFalse () =
-    let result = TransitionTableParser.differOnlyByCase [ "foo"; "bar" ]
+    let result = Parser.differOnlyByCase [ "foo"; "bar" ]
     result |> should be False
 
 [<Fact>]
 let differOnlyByCase_WhenDiffer_ReturnsTrue () =
-    let result = TransitionTableParser.differOnlyByCase [ "foo"; "FoO" ]
+    let result = Parser.differOnlyByCase [ "foo"; "FoO" ]
     result |> should be True
 
 [<Fact>]
 let differOnlyByCase_WhenDifferAndDuplicates_ReturnsTrue () =
-    let result = TransitionTableParser.differOnlyByCase [ "foo"; "bar"; "Foo"; "Bar" ]
+    let result = Parser.differOnlyByCase [ "foo"; "bar"; "Foo"; "Bar" ]
     result |> should be True

@@ -179,6 +179,27 @@ namespace TrueWill.Fsm.CSharp.Tests
         }
 
         [Fact]
+        public void Parse_WhenBasic_ReturnsCollection()
+        {
+            const string TableText =
+                "Locked|coin|Unlocked\r\n" +
+                "Unlocked|coin|Unlocked\r\n" +
+                "Unlocked|pass|Locked";
+
+            IEnumerable<Transition> result = TransitionTableParser.Parse(TableText);
+
+            var expected =
+                new []
+                    {
+                        new Transition("Locked", "coin", "Unlocked"),
+                        new Transition("Unlocked", "coin", "Unlocked"),
+                        new Transition("Unlocked", "pass", "Locked")
+                    };
+
+            Assert.Equal(expected, result.ToArray());
+        }
+
+        [Fact]
         public void States_WhenGet_ReturnsStates()
         {
             var transitionTable =

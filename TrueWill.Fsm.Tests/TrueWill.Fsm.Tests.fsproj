@@ -65,7 +65,7 @@
     <None Include="app.config" />
     <Compile Include="TransitionTests.fs" />
     <Compile Include="FunctionalFsmTests.fs" />
-    <Compile Include="TransitionTableParserTests.fs" />
+    <Compile Include="FunctionalParserTests.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
   <ItemGroup>

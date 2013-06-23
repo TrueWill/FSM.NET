@@ -29,3 +29,7 @@ type StateMachine(transitions) =
     /// Throws InvalidOperationException if currentState is not a valid state.
     member x.GetAvailableEvents(currentState) =
         getAvailableEvents currentState transitions
+
+[<AbstractClass; Sealed>]  // class is static
+type TransitionTableParser =
+    static member Parse(tableText) = Parser.parse tableText

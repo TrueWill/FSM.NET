@@ -1,4 +1,4 @@
-﻿module TrueWill.Fsm.TransitionTableParser
+﻿module TrueWill.Fsm.Parser
 
 open System
 open System.Text.RegularExpressions
@@ -48,4 +48,4 @@ let parse tableText =
     if result |> Seq.collect (fun t -> seq [t.CurrentState; t.NewState]) |> differOnlyByCase then
         raise <| ArgumentException("Some states differ only by case.", "tableText")
 
-    result
+    result |> Seq.ofList
