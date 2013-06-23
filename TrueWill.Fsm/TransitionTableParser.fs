@@ -6,6 +6,7 @@ open System.Text.RegularExpressions
 let private regexComment = new Regex("#.*")
 let private regexBlankLine = new Regex(@"^\s*$")
 let private regexLineBreak = new Regex(@"\r?\n")
+// TODO Not using constant for delimiter - need to escape
 let private regexTransition = new Regex(@"^(?<currentState>\w+)\|(?<triggeringEvent>\w+)\|(?<newState>\w+)\s*$")
 
 let private removeComment line =
@@ -22,8 +23,6 @@ let differOnlyByCase (items : seq<string>) =
     let distinctUpperCount = items |> Seq.distinctBy (fun x -> x.ToUpperInvariant()) |> Seq.length
     distinctCount <> distinctUpperCount
 
-// TODO Not using constant for delimiter - need to escape
-// TODO Error checking
 // TODO Allow whitespace (so can line up delimiters if desired)
 // TODO Disallow blank elements
 // TODO Cleanup
@@ -45,5 +44,8 @@ let parse tableText =
 
     if result |> Seq.map (fun x -> x.TriggeringEvent) |> differOnlyByCase then
         raise <| ArgumentException("Some events differ only by case.", "tableText")
+
+    if result |> Seq.collect (fun t -> seq [t.CurrentState; t.NewState]) |> differOnlyByCase then
+        raise <| ArgumentException("Some states differ only by case.", "tableText")
 
     result

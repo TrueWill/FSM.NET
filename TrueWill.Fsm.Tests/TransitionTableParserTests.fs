@@ -73,7 +73,9 @@ let parse_WhenEventsDifferOnlyByCase_Throws () =
          Unlocked|Coin|Unlocked\r\n\
          Unlocked|pass|Locked"
 
-    (fun () -> TransitionTableParser.parse(tableText) |> ignore) |> should throw typeof<ArgumentException>
+    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+
+    ex.Message |> should equal "Some events differ only by case.\r\nParameter name: tableText"
 
 [<Fact>]
 let parse_WhenExtraTransitionPart_Throws () =
@@ -86,8 +88,6 @@ let parse_WhenExtraTransitionPart_Throws () =
 
     ex.Message |> should equal "Invalid number of elements on line 3.\r\nParameter name: tableText"
 
-// TODO: test for insufficent parts
-
 [<Fact>]
 let parse_WhenErrorAndBlankLine_ThrowsWithCorrectLineNumber () =
     let tableText =
@@ -99,6 +99,53 @@ let parse_WhenErrorAndBlankLine_ThrowsWithCorrectLineNumber () =
     let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
 
     ex.Message |> should equal "Invalid number of elements on line 4.\r\nParameter name: tableText"
+
+[<Fact>]
+let parse_WhenLinuxNewLines_ReturnsCollection () =
+    let tableText =
+        "Locked|coin|Unlocked\n\
+         Unlocked|coin|Unlocked\n\
+         Unlocked|pass|Locked\n"
+
+    let table = TransitionTableParser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
+
+[<Fact>]
+let parse_WhenMissingTransitionPart_Throws () =
+    let tableText =
+        "Locked|coin|Unlocked\r\n\
+         Unlocked|Unlocked\r\n\
+         Unlocked|pass|Locked"
+
+    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+
+    ex.Message |> should equal "Invalid number of elements on line 2.\r\nParameter name: tableText"
+
+[<Fact>]
+let parse_WhenOneTransition_ReturnsCollection () =
+    let tableText = "Locked|coin|Unlocked"
+
+    let table = TransitionTableParser.parse(tableText)
+
+    let table = TransitionTableParser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" } ]
+
+[<Fact>]
+let parse_WhenStatesDifferOnlyByCase_Throws () =
+    let tableText =
+        "Locked|coin|Unlocked\r\n\
+         Unlocked|coin|Unlocked\r\n\
+         Unlocked|pass|locked"
+
+    let ex = Assert.Throws<ArgumentException>(fun () -> TransitionTableParser.parse(tableText) |> ignore)
+
+    ex.Message |> should equal "Some states differ only by case.\r\nParameter name: tableText"
 
 [<Fact>]
 let differOnlyByCase_WhenEmpty_ReturnsFalse () =
