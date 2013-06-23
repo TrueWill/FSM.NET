@@ -83,9 +83,6 @@ listen to ideas, though!)
 
 ## To Do
 
-+ Add more tests
-+ Improve the parser's robustness
-+ Improve the OO wrapper to make it easy to use from C#
 + Much better documentation
 + NuGet package
 + Psake build script?
