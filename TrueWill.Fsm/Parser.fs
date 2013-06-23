@@ -3,11 +3,15 @@
 open System
 open System.Text.RegularExpressions
 
+let private escapedDelimiter = @"\" + string Constants.Delimiter
 let private regexComment = new Regex("#.*")
 let private regexBlankLine = new Regex(@"^\s*$")
 let private regexLineBreak = new Regex(@"\r?\n")
-// TODO Not using constant for delimiter - need to escape
-let private regexTransition = new Regex(@"^(?<currentState>\w+)\|(?<triggeringEvent>\w+)\|(?<newState>\w+)\s*$")
+let private regexTransition =
+    new Regex(
+        @"^(?<currentState>\w+)" + escapedDelimiter +
+        "(?<triggeringEvent>\w+)" + escapedDelimiter +
+        "(?<newState>\w+)\s*$")
 
 let private removeComment line =
     regexComment.Replace(line, String.Empty)
