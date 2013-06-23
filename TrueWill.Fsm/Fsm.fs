@@ -4,10 +4,9 @@ module internal Constants =
     [<Literal>]
     let Delimiter = '|'
 
-type Transition = { CurrentState : string; TriggeringEvent : string; NewState : string }
-
-type Transition with
-    member x.AsString() =
+type Transition =
+    { CurrentState : string; TriggeringEvent : string; NewState : string }
+    override x.ToString() =
         System.String.Format("{1}{0}{2}{0}{3}",
             Constants.Delimiter, x.CurrentState, x.TriggeringEvent, x.NewState)
 
