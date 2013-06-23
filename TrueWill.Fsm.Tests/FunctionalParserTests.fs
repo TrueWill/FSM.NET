@@ -20,6 +20,24 @@ let parse_WhenBasic_ReturnsCollection () =
           { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
 
 [<Fact>]
+let parse_WhenBlankEvent_Throws () =
+    let tableText =
+        "Locked| |Unlocked\r\n\
+         Unlocked|coin|Unlocked\r\n\
+         Unlocked|pass|Locked"
+
+    (fun () -> Parser.parse(tableText) |> ignore) |> should throw typeof<ArgumentException>
+
+[<Fact>]
+let parse_WhenBlankState_Throws () =
+    let tableText =
+        "Locked|coin|Unlocked\r\n\
+         |coin|Unlocked\r\n\
+         Unlocked|pass|Locked"
+
+    (fun () -> Parser.parse(tableText) |> ignore) |> should throw typeof<ArgumentException>
+
+[<Fact>]
 let parse_WhenBlankLines_Ignores () =
     let tableText =
         "\r\n\
@@ -58,6 +76,20 @@ let parse_WhenCommentLines_Ignores () =
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
+
+[<Fact>]
+let parse_WhenElementsPadded_Trims () =
+    let tableText =
+        " Locked   | coin | Unlocked \r\n" +
+        " Unlocked | coin | Unlocked \r\n" +
+        " Unlocked | pass | Locked   \r\n"
+
+    let table = Parser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Unlocked" };
           { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
 
 [<Fact>]

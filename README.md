@@ -43,6 +43,10 @@ One per line.
 The first state of the first line is the initial state.
 
 Anything following a '#' is ignored (a comment).
+Blank lines are ignored.
+
+Whitespace surrounding states and events is ignored, so you can line up
+delimiters if you prefer.
 
 ### Example
 

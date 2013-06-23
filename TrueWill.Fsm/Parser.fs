@@ -9,9 +9,9 @@ let private regexBlankLine = new Regex(@"^\s*$")
 let private regexLineBreak = new Regex(@"\r?\n")
 let private regexTransition =
     new Regex(
-        @"^(?<currentState>\w+)" + escapedDelimiter +
-        "(?<triggeringEvent>\w+)" + escapedDelimiter +
-        "(?<newState>\w+)\s*$")
+        @"^\s*(?<currentState>\w+)\s*" + escapedDelimiter +
+        "\s*(?<triggeringEvent>\w+)\s*" + escapedDelimiter +
+        "\s*(?<newState>\w+)\s*$")
 
 let private removeComment line =
     regexComment.Replace(line, String.Empty)
@@ -27,8 +27,6 @@ let differOnlyByCase (items : seq<string>) =
     let distinctUpperCount = items |> Seq.distinctBy (fun x -> x.ToUpperInvariant()) |> Seq.length
     distinctCount <> distinctUpperCount
 
-// TODO Allow whitespace (so can line up delimiters if desired)
-// TODO Disallow blank elements
 // TODO Cleanup
 let parse tableText =
     let lines = regexLineBreak.Split(tableText)
