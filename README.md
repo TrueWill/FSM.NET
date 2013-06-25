@@ -3,6 +3,8 @@ FSM.NET
 
 A simple &quot;stateless&quot; finite-state machine library for .NET, written in F#.
 
+*Now available through [NuGet](https://nuget.org/packages/FSM.NET/)!*
+
 ## Origin/Credits
 
 I was reading
@@ -84,7 +86,6 @@ listen to ideas, though!)
 ## To Do
 
 + Much better documentation
-+ NuGet package
 + Psake build script?
 + Example of one intended use - web service + desktop app
 + Refactor to TransitionTableValidator - trimmed, not blank, interop null checks (on transition elements, too), differ only by case, etc.
