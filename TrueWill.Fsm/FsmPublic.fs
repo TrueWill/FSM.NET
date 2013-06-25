@@ -1,9 +1,15 @@
 ﻿namespace TrueWill.Fsm
 
 open System
+open System.Reflection
 open Fsm
 
+[<assembly: AssemblyVersion("1.0.0.0")>]
+[<assembly: AssemblyFileVersion("1.0.0.0")>]
 [<assembly:CLSCompliant(true)>]
+[<assembly:AssemblyTitle("FSM.NET")>]
+[<assembly:AssemblyDescription("A simple 'stateless' finite-state machine library for .NET.")>]
+[<assembly:AssemblyCopyright("Copyright © 2013 William E. Sorensen and contributors")>]
 do
     ()
 
