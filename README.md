@@ -87,6 +87,7 @@ listen to ideas, though!)
 + NuGet package
 + Psake build script?
 + Example of one intended use - web service + desktop app
++ Refactor to TransitionTableValidator - trimmed, not blank, interop null checks (on transition elements, too), differ only by case, etc.
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 

@@ -10,6 +10,9 @@ do
 type StateMachine(transitions) =
     let transitions = transitions |> Seq.toList
     let isNull x = obj.ReferenceEquals(x, Unchecked.defaultof<_>)  // http://stackoverflow.com/a/10746757/161457
+    let checkNotNull paramValue paramName =
+        if isNull paramValue then
+            raise <| new ArgumentNullException(paramName)
 
     do
         if transitions |> Seq.isEmpty then
@@ -27,11 +30,14 @@ type StateMachine(transitions) =
     /// Gets the new state.
     /// Throws InvalidOperationException if not found.
     member x.GetNewState(currentState, triggeringEvent) =
+        checkNotNull currentState "currentState"
+        checkNotNull triggeringEvent "triggeringEvent"
         getNewState currentState triggeringEvent transitions
 
     /// Gets the collection of available events for the given state.
     /// Throws InvalidOperationException if currentState is not a valid state.
     member x.GetAvailableEvents(currentState) =
+        checkNotNull currentState "currentState"
         getAvailableEvents currentState transitions
 
 [<AbstractClass; Sealed>]  // class is static

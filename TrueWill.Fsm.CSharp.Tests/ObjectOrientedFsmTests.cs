@@ -8,7 +8,6 @@ namespace TrueWill.Fsm.CSharp.Tests
 {
     public class ObjectOrientedFsmTests
     {
-        // TODO: Null checks :( (working)
         // TODO: Way to verify CLS-compliance?
 
         [Fact]
@@ -78,6 +77,15 @@ namespace TrueWill.Fsm.CSharp.Tests
         }
 
         [Fact]
+        public void GetAvailableEvents_WhenCurrentStateIsNull_Throws()
+        {
+            var sut = new StateMachine(GetTestTransitionTable());
+
+            Assert.Throws<ArgumentNullException>(
+                () => sut.GetAvailableEvents(null));
+        }
+
+        [Fact]
         public void GetAvailableEvents_WhenInvalidState_Throws()
         {
             var sut = new StateMachine(GetTestTransitionTable());
@@ -117,6 +125,15 @@ namespace TrueWill.Fsm.CSharp.Tests
             IEnumerable<string> result = sut.GetAvailableEvents(currentState);
 
             Assert.Equal(expectedEvents, result.ToArray());
+        }
+
+        [Fact]
+        public void GetNewState_WhenCurrentStateIsNull_Throws()
+        {
+            var sut = new StateMachine(GetTestTransitionTable());
+
+            Assert.Throws<ArgumentNullException>(
+                () => sut.GetNewState(null, "coin"));
         }
 
         [Fact]
@@ -178,6 +195,15 @@ namespace TrueWill.Fsm.CSharp.Tests
 
             Assert.Throws<InvalidOperationException>(
                 () => sut.GetNewState(TerminalState, TriggeringEvent));
+        }
+
+        [Fact]
+        public void GetNewState_WhenTriggeringEventIsNull_Throws()
+        {
+            var sut = new StateMachine(GetTestTransitionTable());
+
+            Assert.Throws<ArgumentNullException>(
+                () => sut.GetNewState("Locked", null));
         }
 
         [Fact]
