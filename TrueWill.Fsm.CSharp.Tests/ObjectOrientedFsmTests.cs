@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 using Xunit.Extensions;
 
@@ -8,7 +9,21 @@ namespace TrueWill.Fsm.CSharp.Tests
 {
     public class ObjectOrientedFsmTests
     {
-        // TODO: Way to verify CLS-compliance?
+        [Fact]
+        public void Assembly_WhenLoaded_IsClsCompliant()
+        {
+            // Thanks to http://mcbeanit.blogspot.com/2012/10/c-testing-for-cls-compliance.html
+
+            var fsmAssembly = Assembly.GetAssembly(typeof (StateMachine));
+
+            var attributes = fsmAssembly.GetCustomAttributes(typeof(CLSCompliantAttribute), false);
+
+            Assert.Single(attributes);
+
+            var csl = (CLSCompliantAttribute) attributes.First();
+
+            Assert.True(csl.IsCompliant);
+        }
 
         [Fact]
         public void Constructor_WhenCalled_CopiesTransitionTable()
