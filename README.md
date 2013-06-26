@@ -5,6 +5,43 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 
 *Now available through [NuGet](https://nuget.org/packages/FSM.NET/)!*
 
+## Quick start
+
+### C# example
+
+```C#
+// using TrueWill.Fsm;
+
+// Could load text from database, configuration, etc.
+string transitionTableText =
+    @"
+    # Turnstile
+
+    Locked   |coin | Unlocked
+    Unlocked |coin | Unlocked
+    Unlocked |pass | Locked";
+
+var transitions = TransitionTableParser.Parse(transitionTableText);
+
+var fsm = new StateMachine(transitions);
+
+string currentState = fsm.InitialState;
+Console.WriteLine("Initial state: " + currentState);
+
+IEnumerable<string> availableEvents =
+    fsm.GetAvailableEvents(currentState);
+
+// Typically a user would make a selection.
+string selectedEvent = availableEvents.First();
+
+Console.WriteLine("Selected event: " + selectedEvent);
+
+currentState = fsm.GetNewState(currentState, selectedEvent);
+
+Console.WriteLine("New state: " + currentState);
+// Repeat.
+```
+
 ## Origin/Credits
 
 I was reading
