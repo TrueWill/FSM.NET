@@ -10,6 +10,8 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 ### C# example
 
 ```C#
+// Example does not include error handling.
+
 // using TrueWill.Fsm;
 
 // Could load text from database, configuration, etc.
@@ -17,9 +19,9 @@ string transitionTableText =
     @"
     # Turnstile
 
-    Locked   |coin | Unlocked
-    Unlocked |coin | Unlocked
-    Unlocked |pass | Locked";
+    Locked   | coin | Unlocked
+    Unlocked | coin | Unlocked
+    Unlocked | pass | Locked";
 
 var transitions = TransitionTableParser.Parse(transitionTableText);
 
@@ -40,6 +42,47 @@ currentState = fsm.GetNewState(currentState, selectedEvent);
 
 Console.WriteLine("New state: " + currentState);
 // Repeat.
+
+// fsm.States is also available.
+```
+
+### F# example
+```F#
+// Example does not include error handling.
+
+open TrueWill.Fsm
+
+// Could load text from database, configuration, etc.
+let transitionTableText =
+    """
+    # Turnstile
+
+    Locked   | coin | Unlocked
+    Unlocked | coin | Unlocked
+    Unlocked | pass | Locked
+    """
+
+let transitions = Parser.parse transitionTableText
+
+let currentState = Fsm.getInitialState transitions
+
+printfn "Initial state: %s" currentState
+
+let availableEvents =
+    Fsm.getAvailableEvents currentState transitions
+
+// Typically a user would make a selection.
+let selectedEvent = Seq.head availableEvents
+
+printfn "Selected event: %s" selectedEvent
+
+let newState =
+    Fsm.getNewState currentState selectedEvent transitions
+
+printfn "New state: %s" newState
+// Repeat.
+
+// Fsm.getStates is also available.
 ```
 
 ## Origin/Credits
@@ -87,6 +130,8 @@ Blank lines are ignored.
 Whitespace surrounding states and events is ignored, so you can line up
 delimiters if you prefer.
 
+States may not differ only by case; neither may events.
+
 ### Example
 
     Locked|coin|Unlocked
@@ -120,9 +165,13 @@ probably won't accept that pull request. In particular, I want the DSL to
 be self-contained, without requiring binary references. (I'm willing to
 listen to ideas, though!)
 
+## Release notes
+
++ 1.0.0 Initial stable release
+
 ## To Do
 
-+ Much better documentation
++ Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
 + Example of one intended use - web service + desktop app
 + Refactor to TransitionTableValidator - trimmed, not blank, interop null checks (on transition elements, too), differ only by case, etc.
