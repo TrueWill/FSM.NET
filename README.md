@@ -115,6 +115,14 @@ F# and C# to insure this.
 I would prefer to avoid adding dependencies on other libraries to the core
 library. (The tests depend on xUnit.net, FsUnit, etc.)
 
+## Thread Safety
+
+All public types, methods, and functions **should** be thread safe.
+
+I make no warranties.
+
+If you find anything that is **not** thread safe, please open an issue.
+
 ## State Transition Tables
 
 ### Format
