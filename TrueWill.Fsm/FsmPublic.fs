@@ -21,6 +21,7 @@ type StateMachine(transitions) =
             raise <| new ArgumentNullException(paramName)
 
     do
+        // TODO: Call validator instead
         if transitions |> Seq.isEmpty then
             raise <| new ArgumentException("Transition Table is empty.", "transitions")
 

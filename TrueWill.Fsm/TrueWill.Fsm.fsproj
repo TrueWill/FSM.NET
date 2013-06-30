@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Fsm.fs" />
     <Compile Include="Parser.fs" />
+    <Compile Include="Validator.fs" />
     <Compile Include="FsmPublic.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
