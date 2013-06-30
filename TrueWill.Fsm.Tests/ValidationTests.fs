@@ -23,7 +23,7 @@ let validate_WhenTransitionsContainsNull_Throws () =
         [ { CurrentState = "Locked"; TriggeringEvent = "coin"; NewState = "Unlocked" };
           nullTransition ]
 
-    (fun () -> validate transitions |> ignore) |> should throw typeof<ArgumentException>
+    (fun () -> validate transitions |> ignore) |> should throw typeof<ArgumentNullException>
 
 [<Theory>]
 [<InlineData(null,      "coin",  "Unlocked")>]

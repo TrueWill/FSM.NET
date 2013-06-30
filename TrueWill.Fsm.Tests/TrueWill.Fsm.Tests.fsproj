@@ -71,6 +71,7 @@
     <Compile Include="FunctionalFsmTests.fs" />
     <Compile Include="FunctionalParserTests.fs" />
     <Compile Include="ValidationTests.fs" />
+    <Compile Include="HelpersTests.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TrueWill.Fsm\TrueWill.Fsm.fsproj">

@@ -3,6 +3,7 @@
 open System
 open System.Reflection
 open Fsm
+open Helpers
 
 [<assembly: AssemblyVersion("1.0.0.0")>]
 [<assembly: AssemblyFileVersion("1.0.0.0")>]
@@ -15,18 +16,9 @@ do
 
 type StateMachine(transitions) =
     let transitions = transitions |> Seq.toList
-    let isNull x = obj.ReferenceEquals(x, Unchecked.defaultof<_>)  // http://stackoverflow.com/a/10746757/161457
-    let checkNotNull paramValue paramName =
-        if isNull paramValue then
-            raise <| new ArgumentNullException(paramName)
 
     do
-        // TODO: Call validator instead
-        if transitions |> Seq.isEmpty then
-            raise <| new ArgumentException("Transition Table is empty.", "transitions")
-
-        if transitions |> Seq.exists isNull then
-            raise <| new ArgumentException("A transition is null.", "transitions")
+        Validator.validate transitions
 
     /// Gets the initial state.
     member x.InitialState = getInitialState transitions

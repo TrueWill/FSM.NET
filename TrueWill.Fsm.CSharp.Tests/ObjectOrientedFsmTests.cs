@@ -43,6 +43,40 @@ namespace TrueWill.Fsm.CSharp.Tests
         }
 
         [Fact]
+        public void Constructor_WhenEventsDifferOnlyByCase_Throws()
+        {
+            var transitionTable =
+                new List<Transition>
+                    {
+                        new Transition("Locked", "coin", "Unlocked"),
+                        new Transition("Unlocked", "Coin", "Unlocked"),
+                        new Transition("Unlocked", "pass", "Locked")
+                    };
+
+             var ex = Assert.Throws<ArgumentException>(
+                () => new StateMachine(transitionTable));
+
+            Assert.Contains("Some events differ only by case.", ex.Message);
+        }
+
+        [Fact]
+        public void Constructor_WhenStatesDifferOnlyByCase_Throws()
+        {
+            var transitionTable =
+                new List<Transition>
+                    {
+                        new Transition("Locked", "coin", "Unlocked"),
+                        new Transition("Unlocked", "coin", "Unlocked"),
+                        new Transition("Unlocked", "pass", "locked")
+                    };
+
+             var ex = Assert.Throws<ArgumentException>(
+                () => new StateMachine(transitionTable));
+
+            Assert.Contains("Some states differ only by case.", ex.Message);
+        }
+
+        [Fact]
         public void Constructor_WhenTransitionTableContainsNull_Throws()
         {
             var transitionTable =
@@ -52,7 +86,7 @@ namespace TrueWill.Fsm.CSharp.Tests
                         null
                     };
 
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<ArgumentNullException>(
                 () => new StateMachine(transitionTable));
         }
 

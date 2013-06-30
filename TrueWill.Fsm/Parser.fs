@@ -2,6 +2,7 @@
 
 open System
 open System.Text.RegularExpressions
+open Helpers
 
 let private escapedDelimiter = @"\" + string Constants.Delimiter
 let private regexComment = new Regex("#.*")
@@ -19,15 +20,6 @@ let private removeComment line =
 let private isBlank line =
     regexBlankLine.IsMatch(line)
 
-/// Determines if a sequence (which may contain duplicates) contains
-/// any elements that differ only by case.
-/// Exposed primarily for unit tests.
-let differOnlyByCase (items : seq<string>) =
-    let distinctCount = items |> Seq.distinct |> Seq.length
-    let distinctUpperCount = items |> Seq.distinctBy (fun x -> x.ToUpperInvariant()) |> Seq.length
-    distinctCount <> distinctUpperCount
-
-// TODO Cleanup
 let parse tableText =
     let lines = regexLineBreak.Split(tableText)
 
@@ -43,11 +35,5 @@ let parse tableText =
                 raise <| ArgumentException(sprintf "Invalid number of elements on line %d." (lineNumber + 1), "tableText")
             { CurrentState = mtch.Groups.["currentState"].Value; TriggeringEvent = mtch.Groups.["triggeringEvent"].Value; NewState = mtch.Groups.["newState"].Value } )
         |> Seq.toList
-
-    if result |> Seq.map (fun x -> x.TriggeringEvent) |> differOnlyByCase then
-        raise <| ArgumentException("Some events differ only by case.", "tableText")
-
-    if result |> Seq.collect (fun t -> seq [t.CurrentState; t.NewState]) |> differOnlyByCase then
-        raise <| ArgumentException("Some states differ only by case.", "tableText")
 
     result |> Seq.ofList

@@ -43,6 +43,7 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers.fs" />
     <Compile Include="Fsm.fs" />
     <Compile Include="Parser.fs" />
     <Compile Include="Validator.fs" />

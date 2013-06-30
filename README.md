@@ -5,6 +5,10 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 
 *Now available through [NuGet](https://nuget.org/packages/FSM.NET/)!*
 
+*NOTE:* The next version will be a breaking change for F# clients.
+Most C# code will not be affected; however, some exceptions previously raised
+by the parser will instead be raised on construction of the state machine.
+
 ## Quick start
 
 ### C# example
@@ -63,6 +67,9 @@ let transitionTableText =
     """
 
 let transitions = Parser.parse transitionTableText
+
+// If using latest code (not in v1.0.0):
+// Validator.validate transitions
 
 let currentState = Fsm.getInitialState transitions
 

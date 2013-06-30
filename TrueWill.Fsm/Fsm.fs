@@ -16,6 +16,10 @@ module Fsm =
         if not found then
             raise <| System.InvalidOperationException(sprintf "Invalid state: '%s'." state)
 
+    let internal getStatesIncludingDuplicates transitions =
+        transitions
+        |> Seq.collect (fun t -> seq [t.CurrentState; t.NewState])
+
     let getInitialState transitions =
         (transitions |> Seq.head).CurrentState
 
@@ -33,5 +37,5 @@ module Fsm =
 
     let getStates transitions =
         transitions
-        |> Seq.collect (fun t -> seq [t.CurrentState; t.NewState])
+        |> getStatesIncludingDuplicates
         |> Seq.distinct

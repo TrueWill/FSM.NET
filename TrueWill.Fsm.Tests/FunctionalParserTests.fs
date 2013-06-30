@@ -99,17 +99,6 @@ let parse_WhenEmpty_ReturnsEmptyCollection () =
     table |> Seq.isEmpty |> should be True
 
 [<Fact>]
-let parse_WhenEventsDifferOnlyByCase_Throws () =
-    let tableText =
-        "Locked|coin|Unlocked\r\n\
-         Unlocked|Coin|Unlocked\r\n\
-         Unlocked|pass|Locked"
-
-    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
-
-    ex.Message |> should equal "Some events differ only by case.\r\nParameter name: tableText"
-
-[<Fact>]
 let parse_WhenExtraTransitionPart_Throws () =
     let tableText =
         "Locked|coin|Unlocked\r\n\
@@ -165,44 +154,3 @@ let parse_WhenOneTransition_ReturnsCollection () =
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" } ]
-
-[<Fact>]
-let parse_WhenStatesDifferOnlyByCase_Throws () =
-    let tableText =
-        "Locked|coin|Unlocked\r\n\
-         Unlocked|coin|Unlocked\r\n\
-         Unlocked|pass|locked"
-
-    let ex = Assert.Throws<ArgumentException>(fun () -> Parser.parse(tableText) |> ignore)
-
-    ex.Message |> should equal "Some states differ only by case.\r\nParameter name: tableText"
-
-[<Fact>]
-let differOnlyByCase_WhenEmpty_ReturnsFalse () =
-    let result = Parser.differOnlyByCase []
-    result |> should be False
-
-[<Fact>]
-let differOnlyByCase_WhenOne_ReturnsFalse () =
-    let result = Parser.differOnlyByCase [ "foo" ]
-    result |> should be False
-
-[<Fact>]
-let differOnlyByCase_WhenDuplicates_ReturnsFalse () =
-    let result = Parser.differOnlyByCase [ "foo"; "foo" ]
-    result |> should be False
-
-[<Fact>]
-let differOnlyByCase_WhenDistinct_ReturnsFalse () =
-    let result = Parser.differOnlyByCase [ "foo"; "bar" ]
-    result |> should be False
-
-[<Fact>]
-let differOnlyByCase_WhenDiffer_ReturnsTrue () =
-    let result = Parser.differOnlyByCase [ "foo"; "FoO" ]
-    result |> should be True
-
-[<Fact>]
-let differOnlyByCase_WhenDifferAndDuplicates_ReturnsTrue () =
-    let result = Parser.differOnlyByCase [ "foo"; "bar"; "Foo"; "Bar" ]
-    result |> should be True
