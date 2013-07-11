@@ -5,7 +5,7 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 
 *Now available through [NuGet](https://nuget.org/packages/FSM.NET/)!*
 
-*NOTE:* The next version will be a breaking change for F# clients.
+*NOTE:* The next version (checked in) will be a breaking change for F# clients.
 Most C# code will not be affected; however, some exceptions previously raised
 by the parser will instead be raised on construction of the state machine.
 
@@ -186,7 +186,7 @@ listen to ideas, though!)
 
 ## To Do
 
-+ getAvailableEvents & getNewState - transitions as 1st param for partial application
++ Release new version
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
 + Example of one intended use - web service + desktop app

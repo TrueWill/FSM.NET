@@ -3,6 +3,4 @@
 // Note that script files will not be part of the project build.
 
 #load "Fsm.fs"
-#load "Parser.fs"
 open TrueWill.Fsm
-open TrueWill.Fsm.Parser

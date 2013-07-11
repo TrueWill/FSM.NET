@@ -31,13 +31,13 @@ type StateMachine(transitions) =
     member x.GetNewState(currentState, triggeringEvent) =
         checkNotNull currentState "currentState"
         checkNotNull triggeringEvent "triggeringEvent"
-        getNewState currentState triggeringEvent transitions
+        getNewState transitions currentState triggeringEvent
 
     /// Gets the collection of available events for the given state.
     /// Throws InvalidOperationException if currentState is not a valid state.
     member x.GetAvailableEvents(currentState) =
         checkNotNull currentState "currentState"
-        getAvailableEvents currentState transitions
+        getAvailableEvents transitions currentState
 
 [<AbstractClass; Sealed>]  // class is static
 type TransitionTableParser =

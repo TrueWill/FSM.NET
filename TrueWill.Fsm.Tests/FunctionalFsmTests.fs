@@ -21,7 +21,8 @@ let getInitialState_WhenMultipleTransitions_ReturnsFirstCurrentState () =
 [<Fact>]
 let getAvailableEvents_WhenValidState_ReturnsAvailableEvents () =
     let currentState = "Unlocked"
-    let availableEvents = Fsm.getAvailableEvents currentState testTransitions
+    let getAvailableEvents = Fsm.getAvailableEvents testTransitions
+    let availableEvents = getAvailableEvents currentState
 
     Seq.toList availableEvents |> should equal [ "coin"; "pass" ]
 
@@ -29,7 +30,8 @@ let getAvailableEvents_WhenValidState_ReturnsAvailableEvents () =
 let getNewState_WhenValidArguments_ReturnsNewState () =
     let currentState = "Locked"
     let selectedEvent = "coin"
-    let newState = Fsm.getNewState currentState selectedEvent testTransitions
+    let getNewState = Fsm.getNewState testTransitions
+    let newState = getNewState currentState selectedEvent
 
     newState |> should equal "Unlocked"
 
