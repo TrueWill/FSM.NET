@@ -191,7 +191,7 @@ parameter on several methods for partial application. This allows F#
 clients to store the transitions along with the function. Moved
 validation from parser to validator. F# clients will want to call the
 validator manually; C# clients will not be affected, except that
-exceptions formerly thrown by the parser will now be thrown by the
+some exceptions formerly thrown by the parser will now be thrown by the
 constructor of the state machine.
 
 ## To Do
