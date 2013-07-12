@@ -1,5 +1,6 @@
 ﻿module FunctionalFsmTests
 
+open System
 open TrueWill.Fsm
 open Xunit
 open FsUnit.Xunit
@@ -11,7 +12,7 @@ let testTransitions =
 
 [<Fact>]
 let getInitialState_WhenNoTransitions_ThrowsArgumentException () =
-    (fun () -> Fsm.getInitialState Seq.empty |> ignore) |> should throw typeof<System.ArgumentException>
+    (fun () -> Fsm.getInitialState Seq.empty |> ignore) |> should throw typeof<ArgumentException>
 
 [<Fact>]
 let getInitialState_WhenMultipleTransitions_ReturnsFirstCurrentState () =
