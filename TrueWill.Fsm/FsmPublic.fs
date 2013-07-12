@@ -5,8 +5,8 @@ open System.Reflection
 open Fsm
 open Helpers
 
-[<assembly: AssemblyVersion("1.0.0.0")>]
-[<assembly: AssemblyFileVersion("1.0.0.0")>]
+[<assembly:AssemblyVersion("2.0.0.0")>]
+[<assembly:AssemblyFileVersion("2.0.0.0")>]
 [<assembly:CLSCompliant(true)>]
 [<assembly:AssemblyTitle("FSM.NET")>]
 [<assembly:AssemblyDescription("A simple 'stateless' finite-state machine library for .NET.")>]

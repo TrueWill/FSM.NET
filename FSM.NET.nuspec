@@ -2,14 +2,14 @@
 <package >
   <metadata>
     <id>FSM.NET</id>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <authors>Bill Sorensen</authors>
     <owners>Bill Sorensen</owners>
     <licenseUrl>https://github.com/TrueWill/FSM.NET/blob/master/LICENSE.txt</licenseUrl>
     <projectUrl>https://github.com/TrueWill/FSM.NET</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A simple "stateless" finite-state machine library for .NET.</description>
-    <releaseNotes>Initial version.</releaseNotes>
+    <releaseNotes>Breaking change for F# clients - reordered parameters and added validator.</releaseNotes>
     <copyright>Copyright (c) 2013 William E. Sorensen and contributors</copyright>
     <tags>statemachine stateless fsm F# fsharp csharp C#</tags>
   </metadata>

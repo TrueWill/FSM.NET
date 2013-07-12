@@ -5,10 +5,6 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 
 *Now available through [NuGet](https://nuget.org/packages/FSM.NET/)!*
 
-*NOTE:* The next version (checked in) will be a breaking change for F# clients.
-Most C# code will not be affected; however, some exceptions previously raised
-by the parser will instead be raised on construction of the state machine.
-
 ## Quick start
 
 ### C# example
@@ -68,23 +64,24 @@ let transitionTableText =
 
 let transitions = Parser.parse transitionTableText
 
-// If using latest code (not in v1.0.0):
-// Validator.validate transitions
+Validator.validate transitions
 
 let currentState = Fsm.getInitialState transitions
 
 printfn "Initial state: %s" currentState
 
-let availableEvents =
-    Fsm.getAvailableEvents currentState transitions
+// Partially apply these functions to store the transitions.
+let getAvailableEvents = Fsm.getAvailableEvents transitions
+let getNewState = Fsm.getNewState transitions
+
+let availableEvents = getAvailableEvents currentState
 
 // Typically a user would make a selection.
 let selectedEvent = Seq.head availableEvents
 
 printfn "Selected event: %s" selectedEvent
 
-let newState =
-    Fsm.getNewState currentState selectedEvent transitions
+let newState = getNewState currentState selectedEvent
 
 printfn "New state: %s" newState
 // Repeat.
@@ -180,13 +177,25 @@ probably won't accept that pull request. In particular, I want the DSL to
 be self-contained, without requiring binary references. (I'm willing to
 listen to ideas, though!)
 
+## Notes
+
+The validate function may evaluate the transitions sequence multiple times.
+Since the parse function and the StateMachine constructor both do toList
+internally, this is not an issue in typical use.
+
 ## Release notes
 
 + 1.0.0 Initial stable release
++ 2.0.0 Breaking change for F# clients - moved transitions to first
+parameter on several methods for partial application. This allows F#
+clients to store the transitions along with the function. Moved
+validation from parser to validator. F# clients will want to call the
+validator manually; C# clients will not be affected, except that
+exceptions formerly thrown by the parser will now be thrown by the
+constructor of the state machine.
 
 ## To Do
 
-+ Release new version
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
 + Example of one intended use - web service + desktop app
