@@ -198,7 +198,8 @@ constructor of the state machine.
 
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
-+ Example of one intended use - web service + desktop app
++ Example of one intended use - web service + desktop app (web service is done - see Samples directory)
++ Allow embedded spaces in states and events
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 
