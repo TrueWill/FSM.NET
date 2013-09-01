@@ -9,6 +9,8 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 
 ### C# example
 
+(See also the Samples folder)
+
 ```C#
 // Example does not include error handling.
 
@@ -171,6 +173,8 @@ Say I have a simple workflow, defined in a state machine.
 
 You'd want to combine this with a data store and security.
 
+(See the Samples folder for an example of this.)
+
 I do **not** want to make FSM complicated. If you want to fork the project
 and add the ability to run custom code on transitions, feel free, but I
 probably won't accept that pull request. In particular, I want the DSL to
@@ -196,10 +200,9 @@ constructor of the state machine.
 
 ## To Do
 
++ Allow embedded spaces in states and events
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
-+ Example of one intended use - web service + desktop app (web service is done - see Samples directory)
-+ Allow embedded spaces in states and events
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 

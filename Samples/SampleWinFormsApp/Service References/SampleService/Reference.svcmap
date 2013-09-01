@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ed57553f-b343-455d-a7b1-2317eb86302a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50962/StateMachineService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="StateMachineService.xsd" MetadataType="Schema" ID="dbeffe7f-a35f-4df4-8143-d791aa561938" SourceId="1" SourceUrl="http://localhost:50962/StateMachineService.svc?xsd=xsd0" />
+    <MetadataFile FileName="StateMachineService1.xsd" MetadataType="Schema" ID="8665e229-f9e2-4c3b-9252-56767dcac520" SourceId="1" SourceUrl="http://localhost:50962/StateMachineService.svc?xsd=xsd1" />
+    <MetadataFile FileName="StateMachineService2.xsd" MetadataType="Schema" ID="3753daeb-b31c-490e-aef3-859782e3fc53" SourceId="1" SourceUrl="http://localhost:50962/StateMachineService.svc?xsd=xsd2" />
+    <MetadataFile FileName="StateMachineService.disco" MetadataType="Disco" ID="807279b7-45b5-4b9f-9bd0-acc840397586" SourceId="1" SourceUrl="http://localhost:50962/StateMachineService.svc?disco" />
+    <MetadataFile FileName="StateMachineService.wsdl" MetadataType="Wsdl" ID="fd75fb62-123a-4521-a594-3fd99841727c" SourceId="1" SourceUrl="http://localhost:50962/StateMachineService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

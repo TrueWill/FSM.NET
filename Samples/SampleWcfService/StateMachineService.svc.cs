@@ -14,6 +14,7 @@ namespace SampleWcfService
         {
             // Cheesy initialization - I'd probably use Unity.WCF in production.
             // Not handling errors.
+            // No security.
 
             // Read state machine from Web.config.
 

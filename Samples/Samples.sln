@@ -5,6 +5,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWcfService", "SampleW
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TrueWill.Fsm", "..\TrueWill.Fsm\TrueWill.Fsm.fsproj", "{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWinFormsApp", "SampleWinFormsApp\SampleWinFormsApp.csproj", "{AA963194-6937-4261-84B2-A79110005D3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1E055C5A-F51A-4866-B06E-7C262BD15287} = {1E055C5A-F51A-4866-B06E-7C262BD15287}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +24,10 @@ Global
 		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31370B7D-4DBD-4767-AAF7-EE94D6D73FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA963194-6937-4261-84B2-A79110005D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA963194-6937-4261-84B2-A79110005D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA963194-6937-4261-84B2-A79110005D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA963194-6937-4261-84B2-A79110005D3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
