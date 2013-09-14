@@ -62,3 +62,23 @@ let validate_WhenEventsDifferOnlyByCase_Throws () =
     let ex = Assert.Throws<ArgumentException>(fun () -> validate transitions |> ignore)
 
     ex.Message |> should startWith "Some events differ only by case."
+
+[<Fact>]
+let validate_WhenConflictingTransitions_Throws () =
+    let transitions =
+        [ { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Locked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Unlocked" } ]
+
+    let ex = Assert.Throws<ArgumentException>(fun () -> validate transitions |> ignore)
+
+    ex.Message |> should startWith "The same event on the same state has multiple resulting states."
+
+[<Fact>]
+let validate_WhenDuplicates_Throws () =
+    let transitions =
+        [ { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Locked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Locked" } ]
+
+    let ex = Assert.Throws<ArgumentException>(fun () -> validate transitions |> ignore)
+
+    ex.Message |> should startWith "Transition Table contains duplicates."
