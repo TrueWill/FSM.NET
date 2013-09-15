@@ -200,7 +200,6 @@ constructor of the state machine.
 
 ## To Do
 
-+ Allow embedded spaces in states and events
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
 

@@ -154,3 +154,21 @@ let parse_WhenOneTransition_ReturnsCollection () =
 
     Seq.toList table |> should equal
         [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" } ]
+
+[<Fact>]
+let parse_WhenEmbeddedSpaces_Preserves () =
+    let tableText = " Order Entry | order is entered | Order Verification "
+
+    let table = Parser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "Order Entry"; TriggeringEvent = "order is entered"; NewState = "Order Verification" } ]
+
+[<Fact>]
+let parse_WhenStatesAndEventsOfLengthOne_ReturnsCollection () =
+    let tableText = "A|b|C"
+
+    let table = Parser.parse(tableText)
+
+    Seq.toList table |> should equal
+        [ { CurrentState = "A"; TriggeringEvent = "b"; NewState = "C" } ]

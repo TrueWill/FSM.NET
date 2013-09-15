@@ -8,11 +8,18 @@ let private escapedDelimiter = @"\" + string Constants.Delimiter
 let private regexComment = new Regex("#.*")
 let private regexBlankLine = new Regex(@"^\s*$")
 let private regexLineBreak = new Regex(@"\r?\n")
+
+// A state or event may contain embedded spaces.
+// It must start and end with a letter, digit, or underscore.
+// It needs to match "A" and not match all of "A ".
+// Using positive lookbehind to ensure this.
+let private stateOrEventRegexText = @"\w[\w ]*(?<=\w)"
+
 let private regexTransition =
     new Regex(
-        @"^\s*(?<currentState>\w+)\s*" + escapedDelimiter +
-        "\s*(?<triggeringEvent>\w+)\s*" + escapedDelimiter +
-        "\s*(?<newState>\w+)\s*$")
+        @"^\s*(?<currentState>" + stateOrEventRegexText + ")\s*" + escapedDelimiter +
+        "\s*(?<triggeringEvent>" + stateOrEventRegexText + ")\s*" + escapedDelimiter +
+        "\s*(?<newState>" + stateOrEventRegexText + ")\s*$")
 
 let private removeComment line =
     regexComment.Replace(line, String.Empty)
