@@ -37,6 +37,15 @@ let getNewState_WhenValidArguments_ReturnsNewState () =
     newState |> should equal "Unlocked"
 
 [<Fact>]
+let getNewState_WhenTransitionToSameState_ReturnsSameState () =
+    let currentState = "Unlocked"
+    let selectedEvent = "coin"
+    let getNewState = Fsm.getNewState testTransitions
+    let newState = getNewState currentState selectedEvent
+
+    newState |> should equal "Unlocked"
+
+[<Fact>]
 let getStates_WhenCalled_ReturnsStates () =
     let states = Fsm.getStates testTransitions
 
