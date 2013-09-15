@@ -46,6 +46,19 @@ let getNewState_WhenTransitionToSameState_ReturnsSameState () =
     newState |> should equal "Unlocked"
 
 [<Fact>]
+let getNewState_WhenMultipleEventsResultInSameTransition_ReturnsIdenticalResults () =
+    let transitions =
+        [ { CurrentState = "A"; TriggeringEvent = "1"; NewState = "B" };
+          { CurrentState = "A"; TriggeringEvent = "2"; NewState = "B" } ]
+
+    let currentState = "A"
+    let getNewState = Fsm.getNewState transitions
+    let newState1 = getNewState currentState "1"
+    let newState2 = getNewState currentState "2"
+
+    newState1 |> should equal newState2
+
+[<Fact>]
 let getStates_WhenCalled_ReturnsStates () =
     let states = Fsm.getStates testTransitions
 

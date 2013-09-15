@@ -82,3 +82,31 @@ let validate_WhenDuplicates_Throws () =
     let ex = Assert.Throws<ArgumentException>(fun () -> validate transitions |> ignore)
 
     ex.Message |> should startWith "Transition Table contains duplicates."
+
+[<Fact>]
+let validate_WhenValid_DoesNotThrow () =
+    let transitions =
+        [ { CurrentState = "Locked";   TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "coin"; NewState = "Unlocked" };
+          { CurrentState = "Unlocked"; TriggeringEvent = "pass"; NewState = "Locked" } ]
+
+    Assert.DoesNotThrow(fun () -> validate transitions |> ignore)
+
+[<Fact>]
+let validate_WhenMultipleEventsResultInSameTransition_DoesNotThrow () =
+    let transitions =
+        [ { CurrentState = "A"; TriggeringEvent = "foo"; NewState = "A" };
+          { CurrentState = "A"; TriggeringEvent = "bar"; NewState = "A" };
+          { CurrentState = "A"; TriggeringEvent = "1";   NewState = "B" };
+          { CurrentState = "A"; TriggeringEvent = "2";   NewState = "B" } ]
+
+    Assert.DoesNotThrow(fun () -> validate transitions |> ignore)
+
+let validate_WhenUnreachableState_DoesNotThrow () =
+    // Insure that it supports migrations with transitional state machines.
+
+    let transitions =
+        [ { CurrentState = "A"; TriggeringEvent = "e1"; NewState = "B" };
+          { CurrentState = "D"; TriggeringEvent = "e2"; NewState = "E" } ]
+
+    Assert.DoesNotThrow(fun () -> validate transitions |> ignore)
