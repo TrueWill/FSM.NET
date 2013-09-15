@@ -146,6 +146,11 @@ delimiters if you prefer.
 
 States may not differ only by case; neither may events.
 
+By default, FSM will raise an exception if an event is received that
+isn't defined on the current state. If you want to ignore the event
+instead, define a transition for the event where the current state and
+the new state are the same.
+
 ### Example
 
     Locked|coin|Unlocked
@@ -175,6 +180,15 @@ You'd want to combine this with a data store and security.
 
 (See the Samples folder for an example of this.)
 
+FSM machines are designed to be deserialized from text. This constraint
+makes it difficult to support actions or guards (behavior/code). While
+there are options (such as Roslyn), these would provide limited benefit
+without associating data with the state machine and supporting calling
+custom assemblies. It's a slippery slope that can lead to reinventing
+Windows Workflow Foundation. What's more, there are other libraries that
+already provide some of these features as internal DSLs (fluent
+interfaces, etc.).
+
 I do **not** want to make FSM complicated. If you want to fork the project
 and add the ability to run custom code on transitions, feel free, but I
 probably won't accept that pull request. In particular, I want the DSL to
@@ -202,6 +216,7 @@ constructor of the state machine.
 
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
++ Add a WPF/ReactiveUI sample
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 
