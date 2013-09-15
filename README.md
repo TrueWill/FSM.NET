@@ -144,6 +144,10 @@ Blank lines are ignored.
 Whitespace surrounding states and events is ignored, so you can line up
 delimiters if you prefer.
 
+States and events are composed of letters, digits, and underscores, and
+may contain embedded spaces. They must start and end with a letter,
+digit, or underscore.
+
 States may not differ only by case; neither may events.
 
 By default, FSM will raise an exception if an event is received that
@@ -211,6 +215,7 @@ validation from parser to validator. F# clients will want to call the
 validator manually; C# clients will not be affected, except that
 some exceptions formerly thrown by the parser will now be thrown by the
 constructor of the state machine.
++ 2.0.1 Supports embedded spaces in states and events; improved validation.
 
 ## To Do
 
