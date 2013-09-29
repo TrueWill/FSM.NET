@@ -221,7 +221,6 @@ constructor of the state machine.
 
 + Improved documentation (XML comments, exception thrown, etc.)
 + Psake build script?
-+ Add a WPF/ReactiveUI sample
 
 Finally, I'm very new to Git and GitHub, so please be patient with me.
 
