@@ -5,6 +5,10 @@ A simple &quot;stateless&quot; finite-state machine library for .NET, written in
 
 *Now available through [NuGet](https://nuget.org/packages/FSM.NET/)!*
 
+## Maintainer wanted
+
+I don't typically work in .NET anymore; if anyone is interested in maintaining this project please contact me. @BillSorensen on Twitter.
+
 ## Quick start
 
 ### C# example
